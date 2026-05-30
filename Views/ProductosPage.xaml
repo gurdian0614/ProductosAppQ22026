@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProductosAppQ22026.Views.ProductosPage"
+             xmlns:viewModel="clr-namespace:ProductosAppQ22026.ViewModels"
+             x:DataType="viewModel:ProductoViewModel"
+             xmlns:model="clr-namespace:ProductosAppQ22026.Models"
+             Title="ProductosPage">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cargar" Command="{Binding CargarProductosCommand}" />
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="8">
+            <Entry Placeholder="Nombre" Text="{Binding Nombre}" />
+            <Entry Placeholder="Descripción" Text="{Binding Descripcion}" />
+            <Entry Placeholder="Precio" Text="{Binding Precio}" Keyboard="Numeric" />
+            <Entry Placeholder="Stock" Text="{Binding Stock}" Keyboard="Numeric" />
+
+            <Button Text="Guardar" Command="{Binding GuardarCommand}" />
+
+            <CollectionView ItemsSource="{Binding Productos}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Producto">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Eliminar" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:ProductoViewModel}}, Path=EliminarCommand}" CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Nombre}" FontSize="16" FontAttributes="Bold" />
+                                <Label Text="{Binding Descripcion}" />
+                                <Label Text="{Binding Precio, StringFormat='Precio: L{0:F2}'}" />
+                                <Label Text="{Binding Stock, StringFormat='Stock: {0}'}"  />
+                            </VerticalStackLayout>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
